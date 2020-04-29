@@ -7,6 +7,6 @@ body {
 }
 
 .image-group {
-  display: flex;
+  display: inline-flex;
   max-width: 70%;
 }

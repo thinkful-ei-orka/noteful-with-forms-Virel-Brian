@@ -14,27 +14,26 @@ let numOfDogPics = 3;
 function getDogPics(num) {
   fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
     .then((r) => r.json())
-    .then((data) => showDogs(data))
-    .catch((error) => alert('Something went wrong!'));
+    .then((data) => showDogs(data));
 }
 
 function showDogs(data) {
   console.log(data);
   console.log(data.message);
   let imgURL = data.message[0];
-  handleImgHTML();
+  console.log(imgURL);
+  handleImgHTML(imgURL);
 }
 
 function waitForDogs() {
   $('form').submit((e) => {
     e.preventDefault();
-    numOfDogPics = e;
-
+    console.log(e.currentTarget.value);
     getDogPics(numOfDogPics);
   });
 }
 
-function handleImgHTML() {
+function handleImgHTML(imgURL) {
   for (let i = 0; i < numOfDogPics; i++) {
     $('.image-group').append(`<img src="${imgURL[i]}">`);
   }

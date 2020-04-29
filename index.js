@@ -20,7 +20,7 @@ function getDogPics(num) {
 function showDogs(data) {
   console.log(data);
   console.log(data.message);
-  let imgURL = data.message[0];
+  let imgURL = data.message;
   console.log(imgURL);
   handleImgHTML(imgURL);
 }
@@ -28,7 +28,7 @@ function showDogs(data) {
 function waitForDogs() {
   $('form').submit((e) => {
     e.preventDefault();
-    console.log(e.currentTarget.value);
+    console.log(e.target[0].value);
     getDogPics(numOfDogPics);
   });
 }
@@ -37,9 +37,12 @@ function handleImgHTML(imgURL) {
   for (let i = 0; i < numOfDogPics; i++) {
     $('.image-group').append(`<img src="${imgURL[i]}">`);
   }
+  // html += `<img src="${imgURL}">`
 }
 
-$(function () {
+function render() {
   console.log('Site is up! Input a number!');
   waitForDogs();
-});
+}
+
+$(render);

@@ -6,7 +6,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.image-group {
-  display: inline-flex;
-  max-width: 70%;
+img {
+  max-width: 70px;
+  margin: 0 auto;
 }

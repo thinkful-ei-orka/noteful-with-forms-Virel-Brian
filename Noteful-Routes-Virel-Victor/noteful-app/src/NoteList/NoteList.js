@@ -1,8 +1,9 @@
 import React from 'react';
 import Note from '../Note/Note';
-//import router components
+// import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-//import NoteList.css
+import './NoteList.css';
 
 export default function NoteList(props) {
      return (
@@ -17,10 +18,18 @@ export default function NoteList(props) {
                     </li>
                     )}
                </ul>
-               {/* button to go to add-note (remember correct route) */}
-               <button className='Add-Note-Button' type='button'>
+               {/* button with link to go to add-note (remember correct route is '/add-note'*/}
+               <button 
+               className='NoteList-Add-Note-Button' 
+               type='button'
+               >
+               <FontAwesomeIcon icon='plus' />
                     Add Note
                </button>
           </section>
      )
+}
+
+NoteList.defaultProps = {
+     notes: []
 }

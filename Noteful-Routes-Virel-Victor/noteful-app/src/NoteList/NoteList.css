@@ -1,0 +1,21 @@
+  
+
+.NoteList ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+}
+   
+.NoteList-button-container {
+  max-width: 380px;
+  margin: 0 10px;
+}
+   
+.NoteList-Add-Note-Button {
+  margin: 0 auto 20px;
+}
+
+.NoteList-Add-Note-Button:hover {
+  background-color: #29862e;
+  color: white;
+}

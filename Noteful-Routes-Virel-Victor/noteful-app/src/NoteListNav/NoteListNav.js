@@ -1,9 +1,13 @@
 import React from 'react';
-//import router components
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-//import NoteListNav.css
+import './NoteListNav.css';
 
 // filter function to get note count
+const noteCounter = (notes= [], folderId) =>
+notes.filter(note => note.folderId === folderId).length;
+
 
 export default function NoteListNav(props) {
      return (
@@ -11,20 +15,30 @@ export default function NoteListNav(props) {
                <ul className='NoteListNav-list'>
                     {props.folders.map(folder => 
                     <li key={folder.id}>
-                         <Link>
-                         {folder.name}
+                         <NavLink
+                         to={`/folder/${folder.id}`}
+                         className='NoteListNav-folder-link'
+                         >
+
                          <span className='NoteListNav-number-notes'>
-                              
+                              {noteCounter(props.notes, folder.id)}
                          </span>
-                         </Link>
-                         
+                         {folder.name}                         
+                         </NavLink>
                     </li>
                     )}
                </ul>
                {/* button to go to add-folder (remember correct route) */}
-               <button className='Add-Folder-Button'>
-                         Add Folder
+               <button 
+               className='NoteListNav-Add-Folder-Button'
+               >
+               <FontAwesomeIcon icon='plus' />
+                    Add Folder
                </button>
           </div>
      )
+}
+
+NoteListNav.defaultProps = {
+     folders: []
 }

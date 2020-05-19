@@ -10,8 +10,17 @@ import dummyStore from '../dummy-store';
 import './App.css'
 
 //find folder
+const findFolder = (folders= [], folderId) =>
+  folders.find(folder => folder.id === folderId)
+
 //find note
+const findNote = (notes= [], noteId) =>
+  notes.find(note => note.id === noteId)
+
 //find the notes for the folder
+const findNotesForFolder = (notes= [], folderId) => (
+  (!folderId) ? notes : notes.filter(note => note.folderId === folderId)
+)
 
 class App extends React.Component {
   state = {

@@ -1,8 +1,13 @@
 import React from 'react';
+//import router components
 import './App.css';
-import NoteMainPage from './NoteMainPage'
-import NoteListNav from './NoteListNav'
-import NoteList from './NoteList'
+import NoteMainPage from './NoteMainPage';
+import NoteListNav from './NoteListNav';
+import NoteList from './NoteList';
+import NotePageNav from './NotePageNav';
+import dummyStore from './dummy-store';
+
+import './App.css'
 
 // export default {
 //   "folders": [
@@ -140,6 +145,8 @@ class App extends React.Component {
     folders: []
   }
 
+  // componentDidMount
+
   // set up routes for nav
 
   // set up routes for main
@@ -148,11 +155,15 @@ class App extends React.Component {
   render() {
     return (
     <div className="App">
-      <nav className='App-nav'></nav>
+      <nav className='App-nav'>
+      {/* routes for nav */}
+      </nav>
       <header className="App-header">
-        <Link></Link>
+        <Link to='/'>Noteful</Link>
       </header>
-      <main className='App-main'></main>
+      <main className='App-main'>
+      {/* routes for main */}
+      </main>
     </div>
   );
   }

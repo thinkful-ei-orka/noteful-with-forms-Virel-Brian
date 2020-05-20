@@ -6,20 +6,21 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NoteList from '../NoteList/NoteList';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import dummyStore from '../dummy-store';
+import {NotefulContext} from '../NotefulContext'
 
 import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //find folder
-const findFolder = (folders= [], folderId) =>
+export const findFolder = (folders= [], folderId) =>
   folders.find(folder => folder.id === folderId)
 
 //find note
-const findNote = (notes= [], noteId) =>
+export const findNote = (notes= [], noteId) =>
   notes.find(note => note.id === noteId)
 
 //find the notes for the folder
-const findNotesForFolder = (notes= [], folderId) => (
+export const findNotesForFolder = (notes= [], folderId) => (
   (!folderId) ? notes : notes.filter(note => note.folderId === folderId)
 )
 
@@ -31,40 +32,45 @@ export default class App extends React.Component {
 
   // componentDidMount
   componentDidMount() {
-    setTimeout(() => this.setState(dummyStore), 600);
+    //setTimeout(() => this.setState(dummyStore), 600);
+    fetch('http://localhost:9090/db')
+      .then(res=> res.json())
+      .then(data=> this.setState({folders:data.folders, notes:data.notes}))
   }
 
+  handleDeleteNote = noteId => {
+    this.setState({
+        notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+};
+    // fetch('http://localhost:9090/notes/' + noteId,{
+    //   method: 'DELETE',
+    //   headers: { 'content-type': 'application/json'}
+    // })
+    // fetch('http://localhost:9090/db')
+    //   .then(res=> res.json())
+    //   .then(data=> this.setState({folders:data.folders, notes:data.notes}))
+
+  
   // set up routes for nav
   navRoutes() {
-    const { notes, folders } = this.state;
     return (
-      <>
+      <NotefulContext.Provider value={{
+        notes: this.state.notes,
+        folders: this.state.folders
+    }}>
+        <>
       {['/', 'folder/:folderId'].map(path => (
         <Route
           exact
           path={path}
           key={path}
-          render={routeProps => (
-            <NoteListNav
-              folders={folders}
-              notes={notes}
-              {...routeProps}
-            />
-          )}
+          component={NoteListNav}
         />
         ))}
         <Route 
         path='/note/:noteId'
-        render= {routeProps => {
-          const { noteId } = routeProps.match.params;
-          const note = findNote(notes, noteId) || {};
-          const folder = findFolder(folders, note.folderId)
-          return <NotePageNav
-          { ...routeProps }
-          folder = { folder }
-          />
-        }
-      }
+        component={NotePageNav}
         />
         <Route
         path='/add-folder'
@@ -75,43 +81,35 @@ export default class App extends React.Component {
         component={ NotePageNav }
         />
       </>
+      </NotefulContext.Provider>
+      
     )
   }
 
   // set up routes for main
   mainRoutes() {
-    const { notes, folders } = this.state;
     return (
-      <>
+      <NotefulContext.Provider value={{
+        notes: this.state.notes,
+        deleteNote: this.handleDeleteNote,
+
+    }}>
+        <>
         {['/', '/folder/:folderId'].map(path => (
           <Route
             exact
             key={ path }
             path={ path }
-            render={routeProps => {
-              const { folderId } = routeProps.match.params;
-              const notesForFolder = findNotesForFolder(notes, folderId);
-              return (
-                <NoteList
-                  {...routeProps}
-                  notes = { notesForFolder }
-                />
-              )
-            }}
+            component={NoteList}
           />
         ))}
         <Route 
         path= '/note/:noteId'
-        render= {routeProps => {
-          const { noteId } = routeProps.match.params;
-          const note = findNote(notes, noteId);
-          return <NoteMainPage 
-          { ...routeProps }
-          note = { note }
-          />
-        }}
+        component={NoteMainPage}
         />
       </>
+    </NotefulContext.Provider>
+      
     )
   }
 

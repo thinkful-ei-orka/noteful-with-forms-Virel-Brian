@@ -23,23 +23,6 @@ export default class NoteMainPage extends React.Component{
         }
 
      render(){
-          // const handleClickDelete = e => {
-          //      e.preventDefault()
-          //      const noteId = this.props.id
-          //      //console.log
-          //      fetch(`http://localhost:9090/notes/${noteId}`, {
-          //        method: 'DELETE',
-          //        headers: {
-          //          'content-type': 'application/json'
-          //        },
-          //      })
-          //           .then(res=> res.json())
-          //           .then(()=>{
-          //                this.context.deleteNote(noteId)
-          //                console.log(this.props,'Yahoo')
-                         
-          //           })
-          // }
           
           let {notes=[]} = this.context;
           console.log(notes);

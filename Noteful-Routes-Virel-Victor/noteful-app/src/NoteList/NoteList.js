@@ -4,6 +4,7 @@ import {NotefulContext} from '../NotefulContext';
 import {findNotesForFolder} from '../App/App';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types';
 
 import './NoteList.css';
 

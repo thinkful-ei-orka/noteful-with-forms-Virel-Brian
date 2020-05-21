@@ -21,13 +21,13 @@ export default class AddFolder extends Component {
             "name": this.state.name.value
         };
         let postFolderString = JSON.stringify(postFolder);
-        fetch('http://localhost:9090/notes/', {
+        fetch('http://localhost:9090/folders/', {
             method: "POST",
             headers: { "content-type": "Application/json" },
             body: postFolderString
         })
             .then(res => res.json())
-            .then(data => this.context.addSetState(data, () => this.props.history.push('/')))
+            .then(data => this.context.addSetStateFolder(data, () => this.props.history.push('/')))
     }
 
     setNameState = (name) => {
@@ -45,7 +45,7 @@ export default class AddFolder extends Component {
 
     validator = () => {
         if (this.validateName() === true) {
-            this.newNote()
+            this.newFolder()
             // return true
         } else {
             console.log('No data')
@@ -55,7 +55,7 @@ export default class AddFolder extends Component {
 
 
     render() {
-        let { folders } = this.context;
+        // let { folders } = this.context;
         
         return (
             <form id="AddFolderForm" onSubmit={e => {
@@ -66,7 +66,7 @@ export default class AddFolder extends Component {
                 <input id="FolderInput" type='text'
                     onChange={e => this.setNameState(e.target.value)} value={this.state.name.value}></input>
                 
-                <button type="submit" >Add Note</button>
+                <button type="submit" >Add Folder</button>
             </form>
         )
     }

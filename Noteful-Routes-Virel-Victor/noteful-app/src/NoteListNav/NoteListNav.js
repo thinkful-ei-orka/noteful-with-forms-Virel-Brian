@@ -1,6 +1,6 @@
 import React from 'react';
 import {NotefulContext} from '../NotefulContext';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './NoteListNav.css';
@@ -33,12 +33,14 @@ export default class NoteListNav extends React.Component {
                          )}
                     </ul>
                     {/* button to go to add-folder (remember correct route) */}
+                    <Link to="/add-folder">
                     <button 
                     className='NoteListNav-Add-Folder-Button'
                     >
                     <FontAwesomeIcon icon='plus' />
                          Add Folder
                     </button>
+                    </Link>
                </div>
           )
      }

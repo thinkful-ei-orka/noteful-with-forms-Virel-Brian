@@ -6,6 +6,8 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NoteList from '../NoteList/NoteList';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import AddNote from '../AddForms/AddNote';
+import AddFolder from '../AddForms/AddFolder';
+import FormError from '../FormError'
 import { NotefulContext } from '../NotefulContext'
 //import {withRouter} from 'react-router'
 
@@ -64,7 +66,10 @@ export default class App extends React.Component {
     console.log(data)
     this.setState({ notes: [...this.state.notes, data]},callback)
   }
-
+  addSetStateFolder = (data, callback) => {
+    console.log(data)
+    this.setState({ folders: [...this.state.folders, data]},callback)
+  }
 
   // set up routes for nav
   navRoutes() {
@@ -83,14 +88,16 @@ export default class App extends React.Component {
           path='/note/:noteId'
           component={NotePageNav}
         />
+        <FormError>
         <Route
           path='/add-folder'
-          component={NotePageNav}
+          component={AddFolder}
         />
         <Route
           path='/add-note'
           component={AddNote}
         />
+        </FormError>
       </>
 
 
@@ -126,7 +133,8 @@ export default class App extends React.Component {
         notes: this.state.notes,
         folders: this.state.folders,
         deleteNote: this.handleDeleteNote,
-        addSetState: this.addSetState
+        addSetState: this.addSetState,
+        addSetStateFolder: this.addSetStateFolder
       }}>
         <div className='App'>
           <nav className='App-nav'>

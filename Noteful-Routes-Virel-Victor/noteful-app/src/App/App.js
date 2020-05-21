@@ -5,6 +5,7 @@ import NoteMainPage from '../NoteMainPage/NoteMainPage';
 import NoteListNav from '../NoteListNav/NoteListNav';
 import NoteList from '../NoteList/NoteList';
 import NotePageNav from '../NotePageNav/NotePageNav';
+import AddNote from '../AddForms/AddNote';
 import {NotefulContext} from '../NotefulContext'
 //import {withRouter} from 'react-router'
 
@@ -97,7 +98,7 @@ export default class App extends React.Component {
         />
         <Route
         path='/add-note'
-        component={ NotePageNav }
+        component={ AddNote }
         />
       </>
       

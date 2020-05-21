@@ -2,7 +2,7 @@ import React from 'react';
 import Note from '../Note/Note';
 import {NotefulContext} from '../NotefulContext';
 import {findNotesForFolder} from '../App/App';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './NoteList.css';
@@ -27,13 +27,16 @@ export default class NoteList extends React.Component {
                          )}
                     </ul>
                     {/* button with link to go to add-note (remember correct route is '/add-note'*/}
+                    <Link to="/add-note">
                     <button 
                     className='NoteList-Add-Note-Button' 
                     type='button'
+                    
                     >
                     <FontAwesomeIcon icon='plus' />
                          Add Note
                     </button>
+                    </Link>
                </section>
           )
      }

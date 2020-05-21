@@ -5,8 +5,8 @@ import NoteMainPage from '../NoteMainPage/NoteMainPage';
 import NoteListNav from '../NoteListNav/NoteListNav';
 import NoteList from '../NoteList/NoteList';
 import NotePageNav from '../NotePageNav/NotePageNav';
-import dummyStore from '../dummy-store';
 import {NotefulContext} from '../NotefulContext'
+//import {withRouter} from 'react-router'
 
 import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,16 +32,38 @@ export default class App extends React.Component {
 
   // componentDidMount
   componentDidMount() {
+    Promise.all([
+      fetch(`http://localhost:9090/notes`),
+      fetch(`http://localhost:9090/folders`)
+    ])
+      .then(([notesRes, foldersRes]) => {
+        if (!notesRes.ok)
+            return notesRes.json().then(e => Promise.reject(e));
+        if (!foldersRes.ok)
+            return foldersRes.json().then(e => Promise.reject(e));
+
+        return Promise.all([notesRes.json(), foldersRes.json()]);
+      })
+      .then(([notes, folders]) => {
+        this.setState({notes, folders});
+      })
+      .catch(error => {
+        console.error({error});
+      });
+  
     //setTimeout(() => this.setState(dummyStore), 600);
-    fetch('http://localhost:9090/db')
-      .then(res=> res.json())
-      .then(data=> this.setState({folders:data.folders, notes:data.notes}))
+    // fetch('http://localhost:9090/db')
+    //   .then(res=> res.json())
+    //   .then(data=> this.setState({folders:data.folders, notes:data.notes}))
+
+      
   }
 
   handleDeleteNote = noteId => {
     this.setState({
         notes: this.state.notes.filter(note => note.id !== noteId)
     });
+    console.log(this.props,'Please')
 };
     // fetch('http://localhost:9090/notes/' + noteId,{
     //   method: 'DELETE',
@@ -55,10 +77,7 @@ export default class App extends React.Component {
   // set up routes for nav
   navRoutes() {
     return (
-      <NotefulContext.Provider value={{
-        notes: this.state.notes,
-        folders: this.state.folders
-    }}>
+      
         <>
       {['/', 'folder/:folderId'].map(path => (
         <Route
@@ -81,7 +100,7 @@ export default class App extends React.Component {
         component={ NotePageNav }
         />
       </>
-      </NotefulContext.Provider>
+      
       
     )
   }
@@ -89,11 +108,7 @@ export default class App extends React.Component {
   // set up routes for main
   mainRoutes() {
     return (
-      <NotefulContext.Provider value={{
-        notes: this.state.notes,
-        deleteNote: this.handleDeleteNote,
-
-    }}>
+      
         <>
         {['/', '/folder/:folderId'].map(path => (
           <Route
@@ -108,13 +123,19 @@ export default class App extends React.Component {
         component={NoteMainPage}
         />
       </>
-    </NotefulContext.Provider>
+    
       
     )
   }
 
   render() {
     return (
+      <NotefulContext.Provider value={{
+        notes: this.state.notes,
+        folders: this.state.folders,
+        deleteNote: this.handleDeleteNote,
+
+    }}>
     <div className='App'>
       <nav className='App-nav'>
       {this.navRoutes()}
@@ -129,6 +150,10 @@ export default class App extends React.Component {
       {this.mainRoutes()}
       </main>
     </div>
+    </NotefulContext.Provider>
   );
   }
+
 }
+
+//export default withRouter(App)

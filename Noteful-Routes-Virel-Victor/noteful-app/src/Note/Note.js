@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {NotefulContext} from '../NotefulContext';
+//import {withRouter} from 'react-router'
 import './Note.css';
 
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+
 export default class Note extends React.Component {
+     static defaultProps ={
+          Deletethis: () => {},
+        }
+        
      static contextType = NotefulContext;
+
      handleClickDelete = e => {
           e.preventDefault()
           const noteId = this.props.id
@@ -22,13 +29,17 @@ export default class Note extends React.Component {
                .then(()=>{
                     this.context.deleteNote(noteId)
                     console.log(this.props,'Yahoo')
-                    //this.props.history.push('/')
+                    console.log(this.props.Deletethis);
+                    
+                    this.props.Deletethis(noteId)
                     //this.props.onDeleteNote(noteId)
                })
      }
      
      render(){
-          let date = new Date(this.props.modified);
+          //let date = new Date(this.props.modified);
+          const {modified} = this.props;
+          console.log(modified)
           return (
                <div className='Note'>
                     <h2 className='Note-title'>
@@ -50,7 +61,7 @@ export default class Note extends React.Component {
                               Modified
                               {' '}
                               <span className='Date'>
-                                   {format(date, 'dd mm yyyy')}
+                                   {format(modified, 'Do MMM YYYY')}
                               </span>
                          </div>
                     </div>
@@ -58,3 +69,5 @@ export default class Note extends React.Component {
           )
      }
 }
+
+//export default withRouter(Note)

@@ -60,7 +60,6 @@ export default class App extends React.Component {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== noteId)
     });
-    console.log(this.props, 'Please')
   };
   addSetState = (data, callback) => {
     console.log(data)

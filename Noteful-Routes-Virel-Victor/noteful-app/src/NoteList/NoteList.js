@@ -13,6 +13,7 @@ export default class NoteList extends React.Component {
      render(){
           let { notes } = this.context;
           let {folderId} = this.props.match.params;
+          console.log(this.props.match);
           let notesForFolder = findNotesForFolder(notes, folderId);
           notes = notesForFolder;
           return (

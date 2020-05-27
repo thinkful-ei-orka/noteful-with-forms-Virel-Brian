@@ -5,10 +5,7 @@ import {NotefulContext} from '../NotefulContext'
 
 import './NoteMainPage.css'
 
-// function handleDeleteNote (noteId) {
-//      console.log(noteId);
-//      this.props.history.push(`/`)
-//    }
+
 export default class NoteMainPage extends React.Component{
      static defaultProps = {
           match: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {NotefulContext} from '../NotefulContext';
+import PropTypes from 'prop-types';
 //import {withRouter} from 'react-router'
 import './Note.css';
 
@@ -32,7 +33,7 @@ export default class Note extends React.Component {
                     console.log(this.props.Deletethis);
                     
                     this.props.Deletethis(noteId)
-                    //this.props.onDeleteNote(noteId)
+                   
                })
      }
      
@@ -41,7 +42,7 @@ export default class Note extends React.Component {
           const {modified} = this.props;
           Note.propTypes = {
                name: PropTypes.string.isRequired,
-               id: PropTypes.isRequired.isRequired,
+               id: PropTypes.string.isRequired,
                modified: PropTypes.string.isRequired
              };
           return (

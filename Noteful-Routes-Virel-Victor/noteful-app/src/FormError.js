@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {reportError} from '.'
 
 export default class FormError extends React.Component{
     constructor(props) {
@@ -16,6 +16,16 @@ export default class FormError extends React.Component{
       }
 
 
+      componentDidCatch(error, info) {
+        //This is from react documentation. I don't know what logComponentStackToMyService is supposed to be. componentStack is a key, info is info object?
+        logComponentStackToMyService(info.componentStack);
+      }
+
+      // componentDidCatch(error,info){
+      //   this.setState({hasError:true})
+      //   reportError(error,info)
+      // }
+
       render() {
         if (this.state.hasError) {      
           return (
@@ -25,3 +35,7 @@ export default class FormError extends React.Component{
         return this.props.children;
       }  
 }
+
+// function reportError() {
+//   return Promise.resolve({success: true})
+// }
